@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package calculator;
 
 /**
@@ -17,12 +12,12 @@ public class NodeTree {
     }
     
     private nodeT createTree(String input){
-	int pos;
+	int operatorIndex;
 	nodeT cur = new nodeT();
-	if((pos = opPosition(input))!=0){
-	    cur.setVal(String.valueOf(input.charAt(pos)));
-	    cur.setLeft(createTree(trimParen(input.substring(0, pos))));
-	    cur.setRight(createTree(trimParen(input.substring(pos+1, input.length()))));
+	if((operatorIndex = getNextOperatorIndex(input))!=0){
+	    cur.setVal(String.valueOf(input.charAt(operatorIndex)));
+	    cur.setLeft(createTree(trimParen(input.substring(0, operatorIndex))));
+	    cur.setRight(createTree(trimParen(input.substring(operatorIndex+1, input.length()))));
 	}
 	else{
 	    cur.setVal(input);
@@ -53,7 +48,7 @@ public class NodeTree {
 	}
     }
     
-    private int opPosition(String input){
+    private int getNextOperatorIndex(String input){
 	int open = 0;
 	int[] index = new int[5];
 	for(int i=0; i<input.length(); i++){
@@ -177,27 +172,27 @@ public class NodeTree {
 	private nodeT left, right;
 	private String val;
 	
-	public String getVal(){
+	protected String getVal(){
 	    return val;
 	}
 	
-	public nodeT getLeft(){
+	protected nodeT getLeft(){
 	    return left;
 	}
 	
-	public nodeT getRight(){
+	protected nodeT getRight(){
 	    return right;
 	}
 	
-	public void setVal(String val){
+	protected void setVal(String val){
 	    this.val = val;
 	}
 	
-	public void setLeft(nodeT left){
+	protected void setLeft(nodeT left){
 	    this.left = left;
 	}
 	
-	public void setRight(nodeT right){
+	protected void setRight(nodeT right){
 	    this.right = right;
 	}
     }

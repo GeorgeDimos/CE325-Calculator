@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package calculator;
 
 import java.io.FileNotFoundException;
@@ -61,7 +56,7 @@ public class Calculator {
 	return open==0;
     }
     
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
 	Scanner sc = new Scanner(System.in);
 	System.out.print("Enter math expression or \"0\" to stop: ");
 	String expr = sc.nextLine();
@@ -86,6 +81,6 @@ public class Calculator {
 	    System.out.print("Enter math expression or \"0\" to stop: ");
 	    expr = sc.nextLine();
 	}
-    }
+    }*/
     
 }
