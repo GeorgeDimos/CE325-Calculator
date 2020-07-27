@@ -79,9 +79,7 @@ public class UIFrame extends javax.swing.JFrame {
         jMenuItemDotFile = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(350, 400));
-        setMinimumSize(new java.awt.Dimension(350, 400));
-        setPreferredSize(new java.awt.Dimension(50, 40));
+        setPreferredSize(new java.awt.Dimension(350, 400));
 
         jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
@@ -90,56 +88,38 @@ public class UIFrame extends javax.swing.JFrame {
 
         jButton8.setMnemonic(VK_NUMPAD8);
         jButton8.setText("8");
-        jButton8.setMaximumSize(null);
-        jButton8.setMinimumSize(null);
         jButton8.setPreferredSize(new java.awt.Dimension(60, 40));
 
         jButton7.setMnemonic(VK_NUMPAD7);
         jButton7.setText("7");
-        jButton7.setMaximumSize(null);
-        jButton7.setMinimumSize(null);
         jButton7.setPreferredSize(new java.awt.Dimension(60, 40));
 
         jButton9.setMnemonic(VK_NUMPAD9);
         jButton9.setText("9");
-        jButton9.setMaximumSize(null);
-        jButton9.setMinimumSize(null);
         jButton9.setPreferredSize(new java.awt.Dimension(60, 40));
 
         jButton4.setMnemonic(VK_NUMPAD4);
         jButton4.setText("4");
-        jButton4.setMaximumSize(null);
-        jButton4.setMinimumSize(null);
         jButton4.setPreferredSize(new java.awt.Dimension(60, 40));
 
         jButton6.setMnemonic(VK_NUMPAD6);
         jButton6.setText("6");
-        jButton6.setMaximumSize(null);
-        jButton6.setMinimumSize(null);
         jButton6.setPreferredSize(new java.awt.Dimension(60, 40));
 
         jButton5.setMnemonic(VK_NUMPAD5);
         jButton5.setText("5");
-        jButton5.setMaximumSize(null);
-        jButton5.setMinimumSize(null);
         jButton5.setPreferredSize(new java.awt.Dimension(60, 40));
 
         jButton1.setMnemonic(VK_NUMPAD1);
         jButton1.setText("1");
-        jButton1.setMaximumSize(null);
-        jButton1.setMinimumSize(null);
         jButton1.setPreferredSize(new java.awt.Dimension(60, 40));
 
         jButton3.setMnemonic(VK_NUMPAD3);
         jButton3.setText("3");
-        jButton3.setMaximumSize(null);
-        jButton3.setMinimumSize(null);
         jButton3.setPreferredSize(new java.awt.Dimension(60, 40));
 
         jButton2.setMnemonic(VK_NUMPAD2);
         jButton2.setText("2");
-        jButton2.setMaximumSize(null);
-        jButton2.setMinimumSize(null);
         jButton2.setPreferredSize(new java.awt.Dimension(60, 40));
 
         jButton0.setMnemonic(VK_NUMPAD0);
@@ -155,50 +135,34 @@ public class UIFrame extends javax.swing.JFrame {
 
         jButtonPow.setMnemonic(VK_CIRCUMFLEX);
         jButtonPow.setText("^");
-        jButtonPow.setMaximumSize(null);
-        jButtonPow.setMinimumSize(null);
         jButtonPow.setPreferredSize(new java.awt.Dimension(60, 40));
 
         jButtonMinus.setMnemonic(VK_SUBTRACT);
         jButtonMinus.setText("-");
-        jButtonMinus.setMaximumSize(null);
-        jButtonMinus.setMinimumSize(null);
         jButtonMinus.setPreferredSize(new java.awt.Dimension(60, 40));
 
         jButtonPlus.setMnemonic(VK_ADD);
         jButtonPlus.setText("+");
-        jButtonPlus.setMaximumSize(null);
-        jButtonPlus.setMinimumSize(null);
         jButtonPlus.setPreferredSize(new java.awt.Dimension(60, 40));
 
         jButtonMul.setMnemonic(VK_MULTIPLY);
         jButtonMul.setText("*");
-        jButtonMul.setMaximumSize(null);
-        jButtonMul.setMinimumSize(null);
         jButtonMul.setPreferredSize(new java.awt.Dimension(60, 40));
 
         jButtonDiv.setMnemonic(VK_DIVIDE);
         jButtonDiv.setText("/");
-        jButtonDiv.setMaximumSize(null);
-        jButtonDiv.setMinimumSize(null);
         jButtonDiv.setPreferredSize(new java.awt.Dimension(60, 40));
 
         jButtonLeftParen.setMnemonic(VK_LEFT_PARENTHESIS);
         jButtonLeftParen.setText("(");
-        jButtonLeftParen.setMaximumSize(null);
-        jButtonLeftParen.setMinimumSize(null);
         jButtonLeftParen.setPreferredSize(new java.awt.Dimension(60, 40));
 
         jButtonRightParen.setMnemonic(VK_RIGHT_PARENTHESIS);
         jButtonRightParen.setText(")");
-        jButtonRightParen.setMaximumSize(null);
-        jButtonRightParen.setMinimumSize(null);
         jButtonRightParen.setPreferredSize(new java.awt.Dimension(60, 40));
 
         jButtonDelete.setMnemonic(VK_BACK_SPACE);
         jButtonDelete.setText("DEL");
-        jButtonDelete.setMaximumSize(null);
-        jButtonDelete.setMinimumSize(null);
         jButtonDelete.setPreferredSize(new java.awt.Dimension(60, 40));
         jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -208,8 +172,6 @@ public class UIFrame extends javax.swing.JFrame {
 
         jButtonClear.setMnemonic(VK_DELETE);
         jButtonClear.setText("CE");
-        jButtonClear.setMaximumSize(null);
-        jButtonClear.setMinimumSize(null);
         jButtonClear.setPreferredSize(new java.awt.Dimension(60, 40));
         jButtonClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -219,8 +181,6 @@ public class UIFrame extends javax.swing.JFrame {
 
         jButtonDecimalPoint.setMnemonic(VK_DECIMAL);
         jButtonDecimalPoint.setText(".");
-        jButtonDecimalPoint.setMaximumSize(null);
-        jButtonDecimalPoint.setMinimumSize(null);
         jButtonDecimalPoint.setPreferredSize(new java.awt.Dimension(60, 40));
 
         jMenuFile.setText("File");
