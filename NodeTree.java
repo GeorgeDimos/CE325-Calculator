@@ -44,7 +44,7 @@ public class NodeTree {
 	    return input;
 	}
 	else{
-	    return input.substring(1, input.length()-1);
+	    return trimParen(input.substring(1, input.length()-1));
 	}
     }
     

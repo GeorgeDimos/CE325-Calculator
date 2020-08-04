@@ -35,18 +35,24 @@ public class Calculator {
     }
     
     private boolean checkValidInput(String input){
-	final String input1 = input.replaceAll("\\s","");
-	String regex = "(\\(+(\\d|\\d+.\\d+)|(\\d|\\d+.\\d+))([\\+\\-\\*\\/\\^](\\d|\\d+.\\d+)|\\)+[\\+\\-\\*\\/\\^](\\d|\\d+.\\d+)|[\\+\\-\\*\\/\\^]\\(+(\\d|\\d+.\\d+)|\\)+[\\+\\-\\*\\/\\^]\\(+(\\d|\\d+.\\d+))*\\)*";
-	if(!input1.matches(regex)){
+	final String noWhitespaceInput = input.replaceAll("\\s","");
+	String op = "[\\+\\-\\*\\/\\^]";
+	String sign = "[\\+\\-]?";
+	String num = "(\\d|\\d+.\\d+)";
+	String openParen = "\\(*";
+	String closeParen = "\\)*";
+	String OR = "|";
+	String regex = "("+openParen+sign+num+OR+sign+num+")"+"("+op+num+OR+op+openParen+sign+num+OR+closeParen+op+num+OR+closeParen+op+openParen+sign+num+")*"+closeParen;
+	if(!noWhitespaceInput.matches(regex)){
 	    return false;
 	}
 
 	int open = 0;
-	for(int i=0;i<input1.length();i++){
-	    if(input1.charAt(i)=='('){
+	for(int i=0;i<noWhitespaceInput.length();i++){
+	    if(noWhitespaceInput.charAt(i)=='('){
 		open++;
 	    }
-	    if(input1.charAt(i)==')'){
+	    if(noWhitespaceInput.charAt(i)==')'){
 		if(open==0){
 		    return false;
 		}
