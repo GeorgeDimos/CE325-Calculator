@@ -12,45 +12,63 @@ public class NodeTree {
     }
     
     private nodeT createTree(String input){
-	int operatorIndex;
-	nodeT cur = new nodeT();
-	if((operatorIndex = getNextOperatorIndex(input))!=0){
-	    cur.setVal(String.valueOf(input.charAt(operatorIndex)));
-	    cur.setLeft(createTree(trimParen(input.substring(0, operatorIndex))));
-	    cur.setRight(createTree(trimParen(input.substring(operatorIndex+1, input.length()))));
+	
+	input = trimParen(input);
+	String currentVal;
+	nodeT left, right;
+	
+	int operatorIndex = getNextOperatorIndex(input);
+	if(operatorIndex !=-1){
+	    currentVal = String.valueOf(input.charAt(operatorIndex));
+	    left = createTree(operatorIndex==0 ? "0" : input.substring(0, operatorIndex));
+	    right = createTree(input.substring(operatorIndex+1, input.length()));
 	}
 	else{
-	    cur.setVal(input);
-	    cur.setLeft(null);
-	    cur.setRight(null);
+	    currentVal = input;
+	    left = null;
+	    right = null;
 	}
-	return cur;
+	
+	return new nodeT(currentVal, left, right);
     }
    
     private String trimParen(String input){
+	if(input.length()<2){
+	    return input;
+	}
+	
 	if(input.charAt(0)!='(' || input.charAt(input.length()-1)!=')'){
 	    return input;
 	}
+	
+	if(!canRemoveParenthesis(input)){
+	    return input;
+	}
+	
+	return trimParen(input.substring(1, input.length()-1));
+	
+    }
+    
+    private boolean canRemoveParenthesis(String input){
+	
 	int open=0;
 	for(int i=1; i<input.length()-1;i++){
 	    if( input.charAt(i)=='('){
 		open++;
 	    }
-	    if(input.charAt(i)==')' && open>0){
+	    else if(input.charAt(i)==')' && open>0){
 		open--;
 	    }
 	}
-	if(open!=0){
-	    return input;
-	}
-	else{
-	    return trimParen(input.substring(1, input.length()-1));
-	}
+	return open==0;
     }
     
     private int getNextOperatorIndex(String input){
 	int open = 0;
 	int[] index = new int[5];
+	for(int i=0; i<5; i++){
+	    index[i]=-1;
+	}
 	for(int i=0; i<input.length(); i++){
 	    if( input.charAt(i)=='('){
 		open++;
@@ -60,16 +78,16 @@ public class NodeTree {
 	    }
 	    if(open==0){
 		switch (input.charAt(i)) {
-		    case '+':
-			index[0] = i;
-			break;
 		    case '-':
+			index[0] = i; 
+			break;
+		    case '+':
 			index[1] = i;
 			break;
-		    case '*':
+		    case '/':
 			index[2] = i;
 			break;
-		    case '/':
+		    case '*':
 			index[3] = i;
 			break;
 		    case '^':
@@ -81,11 +99,11 @@ public class NodeTree {
 	    }
 	}
 	for(int i=0;i<5;i++){
-	    if(index[i]>0){
+	    if(index[i]!=-1){
 		return index[i];
 	    }
 	}
-	return 0;
+	return -1;
     }
     
     public double calculate(){
@@ -93,13 +111,13 @@ public class NodeTree {
     }
     
     private double calculate(nodeT node){
-	
 	if(node.getLeft()==null || node.getRight()==null){
 	    return Double.parseDouble(node.getVal());
 	}
 	
-	double left=calculate(node.getLeft());
-	double right=calculate(node.getRight());
+	double left = calculate(node.getLeft());
+	double right = calculate(node.getRight());
+		
 	switch (node.getVal()){
 	    case "+":
 		return left+right;
@@ -111,8 +129,9 @@ public class NodeTree {
 		return left/right;
 	    case "^":
 		return Math.pow(left,right);
+	    default:
+		return 0;
 	}
-	return 0;
     }
     
     @Override
@@ -171,6 +190,12 @@ public class NodeTree {
     private class nodeT {
 	private nodeT left, right;
 	private String val;
+	
+	public nodeT(String val, nodeT left, nodeT right){
+	    this.left = left;
+	    this.right = right;
+	    this.val = val;
+	}
 	
 	protected String getVal(){
 	    return val;

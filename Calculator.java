@@ -37,13 +37,16 @@ public class Calculator {
     private boolean checkValidInput(String input){
 	final String noWhitespaceInput = input.replaceAll("\\s","");
 	String op = "[\\+\\-\\*\\/\\^]";
-	String sign = "[\\+\\-]?";
-	String num = "(\\d|\\d+.\\d+)";
-	String openParen = "\\(*";
-	String closeParen = "\\)*";
+	String num = "\\d+(.\\d+)?";
+	String openParen = "\\(";
+	String closeParen = "\\)";
+	String sign="[\\+\\-]?";
 	String OR = "|";
-	String regex = "("+openParen+sign+num+OR+sign+num+")"+"("+op+num+OR+op+openParen+sign+num+OR+closeParen+op+num+OR+closeParen+op+openParen+sign+num+")*"+closeParen;
-	if(!noWhitespaceInput.matches(regex)){
+	
+	String myRegex = "(("+sign+openParen+")*"+sign+num+"("+closeParen+OR+"("+op+num+"))*("+op+openParen+")?)+";
+
+	if(!noWhitespaceInput.matches(myRegex)){
+	    System.out.println("REJECTED");
 	    return false;
 	}
 
