@@ -1,5 +1,8 @@
 package calculator;
 
+import java.util.Collections;
+import java.util.Map;
+
 /**
  *
  * @author George
@@ -63,7 +66,7 @@ public class NodeTree {
 
 	private int getNextOperatorIndex(String input) {
 		int open = 0;
-		int[] index = new int[5];
+		int[] index = new int[5];  //Emum map?
 		for (int i = 0; i < 5; i++) {
 			index[i] = -1;
 		}
@@ -71,10 +74,10 @@ public class NodeTree {
 			if (input.charAt(i) == '(') {
 				open++;
 			}
-			if (input.charAt(i) == ')') {
+			else if (input.charAt(i) == ')') {
 				open--;
 			}
-			if (open == 0) {
+			else if (open == 0) {
 				switch (input.charAt(i)) {
 					case '+':
 						index[0] = i;
@@ -205,18 +208,6 @@ public class NodeTree {
 
 		protected nodeT getRight() {
 			return right;
-		}
-
-		protected void setVal(String val) {
-			this.val = val;
-		}
-
-		protected void setLeft(nodeT left) {
-			this.left = left;
-		}
-
-		protected void setRight(nodeT right) {
-			this.right = right;
 		}
 	}
 }

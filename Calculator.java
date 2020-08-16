@@ -51,12 +51,21 @@ public class Calculator {
 			return false;
 		}
 
+		if(!validParen(noWhitespaceInput)){
+			return false;
+		}
+
+		return true;
+		
+	}
+
+	private boolean validParen(String str){
 		int open = 0;
-		for (int i = 0; i < noWhitespaceInput.length(); i++) {
-			if (noWhitespaceInput.charAt(i) == '(') {
+		for (int i = 0; i < str.length(); i++) {
+			if (str.charAt(i) == '(') {
 				open++;
 			}
-			if (noWhitespaceInput.charAt(i) == ')') {
+			if (str.charAt(i) == ')') {
 				if (open == 0) {
 					return false;
 				}
