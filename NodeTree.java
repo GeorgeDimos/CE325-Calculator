@@ -1,8 +1,5 @@
 package calculator;
 
-import java.util.Collections;
-import java.util.Map;
-
 /**
  *
  * @author George
@@ -10,75 +7,100 @@ import java.util.Map;
 public class NodeTree {
 	private final nodeT root;
 
-	public NodeTree(String input) {
-		root = createTree(trimParen(input.replaceAll("\\s", "")));
+	public NodeTree(String expr) {
+		root = createTree(trimParen(expr.replaceAll("\\s", "")));
 	}
 
-	private nodeT createTree(String input) {
+	private nodeT createTree(String expr) {
 
-		input = trimParen(input);
+		expr = trimParen(expr);
 		String currentVal;
 		nodeT left, right;
 
-		int operatorIndex = getNextOperatorIndex(input);
+		int operatorIndex = getNextOperatorIndex(expr);
 		if (operatorIndex != -1) {
-			currentVal = String.valueOf(input.charAt(operatorIndex));
-			left = createTree(operatorIndex == 0 ? "0" : input.substring(0, operatorIndex));
-			right = createTree(input.substring(operatorIndex + 1, input.length()));
+			currentVal = String.valueOf(expr.charAt(operatorIndex));
+			left = createTree(operatorIndex == 0 ? "0" : expr.substring(0, operatorIndex));
+			right = createTree(expr.substring(operatorIndex + 1, expr.length()));
 		} else {
-			currentVal = input;
+			currentVal = expr;
 			left = null;
 			right = null;
 		}
 
+		/*if(!currentVal.matches("[\\+\\-\\*\\/\\^]|\\d+(.\\d+)?")){
+			throw new IllegalArgumentException("Only numbers and operators allowed as values");
+		}*/
+		
 		return new nodeT(currentVal, left, right);
 	}
 
-	private String trimParen(String input) {
-		if (input.length() < 2) {
-			return input;
+	/**
+	 * Removes parenthesis from expression recursively
+	 * @param expr
+	 * @return
+	 */
+	private String trimParen(String expr) {
+		if (expr.length() < 2) {
+			return expr;
 		}
 
-		if (input.charAt(0) != '(' || input.charAt(input.length() - 1) != ')') {
-			return input;
+		if (expr.charAt(0) != '(' || expr.charAt(expr.length() - 1) != ')') {
+			return expr;
 		}
 
-		if (!canRemoveParenthesis(input)) {
-			return input;
+		if (!canRemoveParenthesis(expr)) {
+			return expr;
 		}
 
-		return trimParen(input.substring(1, input.length() - 1));
+		return trimParen(expr.substring(1, expr.length() - 1));
 
 	}
 
-	private boolean canRemoveParenthesis(String input) {
+	/**
+	 * Checks if removing parenthesis leaves open parenthesis 
+	 * in rest of the expression
+	 * @param expr
+	 * @return 
+	 */
+	private boolean canRemoveParenthesis(String expr) {
 
 		int open = 0;
-		for (int i = 1; i < input.length() - 1; i++) {
-			if (input.charAt(i) == '(') {
+		for (int i = 1; i < expr.length() - 1; i++) {
+			if (expr.charAt(i) == '(') {
 				open++;
-			} else if (input.charAt(i) == ')' && open > 0) {
+			} else if (expr.charAt(i) == ')' && open > 0) {
 				open--;
 			}
 		}
 		return open == 0;
 	}
 
-	private int getNextOperatorIndex(String input) {
+	/**
+	 * Maps all operators outside of parenthesis and 
+	 * returns the index of one with the lowest priority or 
+	 * -1 if expression is a number.
+	 * Addition has lower priority than Subtraction
+	 * in order for negative numbers (they are 
+	 * calculated as {0-number}) to work .
+	 * @param expr
+	 * @return index of operator
+	 */
+	private int getNextOperatorIndex(String expr) {
 		int open = 0;
 		int[] index = new int[5];  //Emum map?
 		for (int i = 0; i < 5; i++) {
 			index[i] = -1;
 		}
-		for (int i = 0; i < input.length(); i++) {
-			if (input.charAt(i) == '(') {
+		for (int i = 0; i < expr.length(); i++) {
+			if (expr.charAt(i) == '(') {
 				open++;
 			}
-			else if (input.charAt(i) == ')') {
+			else if (expr.charAt(i) == ')') {
 				open--;
 			}
 			else if (open == 0) {
-				switch (input.charAt(i)) {
+				switch (expr.charAt(i)) {
 					case '+':
 						index[0] = i;
 						break;
@@ -107,10 +129,20 @@ public class NodeTree {
 		return -1;
 	}
 
+	/**
+	 * Calculate the expression starting from the root
+	 * @return
+	 */
 	public double calculate() {
 		return calculate(root);
 	}
 
+	/**
+	 * Parses tree and return a double if the node is a leaf
+	 * of the computation of {(left node) op (right node)}
+	 * @param node
+	 * @return
+	 */
 	private double calculate(nodeT node) {
 		if (node.getLeft() == null || node.getRight() == null) {
 			return Double.parseDouble(node.getVal());
@@ -160,6 +192,10 @@ public class NodeTree {
 		return str.toString();
 	}
 
+	/**
+	 * Creates the content of the .dot file starting from the root Node
+	 * @return
+	 */
 	public String toDotString() {
 		StringBuilder str = new StringBuilder();
 		str.append("digraph ArithmeticExpressionTree {\n" + "label=\"Arithmetic Expression\"\n");
@@ -188,6 +224,11 @@ public class NodeTree {
 		return str.toString();
 	}
 
+	/**
+	 *Private class representing one token of the expression
+	 * Values can be numbers or operators
+	 * @author George
+	 */
 	private class nodeT {
 		private nodeT left, right;
 		private String val;
