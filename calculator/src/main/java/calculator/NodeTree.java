@@ -1,5 +1,9 @@
 package calculator;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  *
  * @author George
@@ -7,8 +11,10 @@ package calculator;
 public class NodeTree {
 	private final nodeT root;
 
+	private static final List<Character> OPERATORS = List.of('+','-','/','*','^');
+
 	public NodeTree(String expr) {
-		root = createTree(trimParen(expr.replaceAll("\\s", "")));
+		root = createTree(expr.replaceAll("\\s", ""));
 	}
 
 	private nodeT createTree(String expr) {
@@ -27,10 +33,6 @@ public class NodeTree {
 			left = null;
 			right = null;
 		}
-
-		/*if(!currentVal.matches("[\\+\\-\\*\\/\\^]|\\d+(.\\d+)?")){
-			throw new IllegalArgumentException("Only numbers and operators allowed as values");
-		}*/
 		
 		return new nodeT(currentVal, left, right);
 	}
@@ -87,46 +89,35 @@ public class NodeTree {
 	 * @return index of operator
 	 */
 	private int getNextOperatorIndex(String expr) {
+		Map<Character, Integer> operatorsMap = new HashMap<>();
+
 		int open = 0;
-		int[] index = new int[5];  //Emum map?
-		for (int i = 0; i < 5; i++) {
-			index[i] = -1;
-		}
+		
 		for (int i = 0; i < expr.length(); i++) {
+
+			if (open == 0 && OPERATORS.contains(expr.charAt(i))) {
+				operatorsMap.put(expr.charAt(i), i);
+			}
+
 			if (expr.charAt(i) == '(') {
 				open++;
 			}
-			else if (expr.charAt(i) == ')') {
+
+			if (expr.charAt(i) == ')') {
 				open--;
 			}
-			else if (open == 0) {
-				switch (expr.charAt(i)) {
-					case '+':
-						index[0] = i;
-						break;
-					case '-':
-						index[1] = i;
-						break;
-					case '/':
-						index[2] = i;
-						break;
-					case '*':
-						index[3] = i;
-						break;
-					case '^':
-						index[4] = i;
-						break;
-					default:
-						break;
-				}
+			
+		}
+
+		int pos = -1;
+		for(Character op: OPERATORS ){
+			if(operatorsMap.containsKey(op)){
+				pos = operatorsMap.get(op);
+				break;
 			}
 		}
-		for (int i = 0; i < 5; i++) {
-			if (index[i] != -1) {
-				return index[i];
-			}
-		}
-		return -1;
+
+		return pos;
 	}
 
 	/**
@@ -246,7 +237,7 @@ public class NodeTree {
 		protected nodeT getLeft() {
 			return left;
 		}
-
+		
 		protected nodeT getRight() {
 			return right;
 		}
