@@ -11,7 +11,7 @@ import java.util.Map;
 public class NodeTree {
 	private final nodeT root;
 
-	private static final List<Character> OPERATORS = List.of('+','-','/','*','^');
+	private static final List<Character> OPERATORS = List.of('+', '-', '/', '*', '^');
 
 	public NodeTree(String expr) {
 		root = createTree(expr.replaceAll("\\s", ""));
@@ -27,18 +27,19 @@ public class NodeTree {
 		if (operatorIndex != -1) {
 			currentVal = String.valueOf(expr.charAt(operatorIndex));
 			left = createTree(operatorIndex == 0 ? "0" : expr.substring(0, operatorIndex));
-			right = createTree(expr.substring(operatorIndex + 1, expr.length()));
+			right = createTree(expr.substring(operatorIndex + 1));
 		} else {
 			currentVal = expr;
 			left = null;
 			right = null;
 		}
-		
+
 		return new nodeT(currentVal, left, right);
 	}
 
 	/**
 	 * Removes parenthesis from expression recursively
+	 * 
 	 * @param expr
 	 * @return
 	 */
@@ -60,10 +61,11 @@ public class NodeTree {
 	}
 
 	/**
-	 * Checks if removing parenthesis leaves open parenthesis 
-	 * in rest of the expression
+	 * Checks if removing parenthesis leaves open parenthesis in rest of the
+	 * expression
+	 * 
 	 * @param expr
-	 * @return 
+	 * @return
 	 */
 	private boolean canRemoveParenthesis(String expr) {
 
@@ -79,12 +81,11 @@ public class NodeTree {
 	}
 
 	/**
-	 * Maps all operators outside of parenthesis and 
-	 * returns the index of one with the lowest priority or 
-	 * -1 if expression is a number.
-	 * Addition has lower priority than Subtraction
-	 * in order for negative numbers (they are 
-	 * calculated as {0-number}) to work .
+	 * Maps all operators outside of parenthesis and returns the index of one with
+	 * the lowest priority or -1 if expression is a number. Addition has lower
+	 * priority than Subtraction in order for negative numbers (they are calculated
+	 * as {0-number}) to work .
+	 * 
 	 * @param expr
 	 * @return index of operator
 	 */
@@ -92,7 +93,7 @@ public class NodeTree {
 		Map<Character, Integer> operatorsMap = new HashMap<>();
 
 		int open = 0;
-		
+
 		for (int i = 0; i < expr.length(); i++) {
 
 			if (open == 0 && OPERATORS.contains(expr.charAt(i))) {
@@ -106,12 +107,12 @@ public class NodeTree {
 			if (expr.charAt(i) == ')') {
 				open--;
 			}
-			
+
 		}
 
 		int pos = -1;
-		for(Character op: OPERATORS ){
-			if(operatorsMap.containsKey(op)){
+		for (Character op : OPERATORS) {
+			if (operatorsMap.containsKey(op)) {
 				pos = operatorsMap.get(op);
 				break;
 			}
@@ -122,6 +123,7 @@ public class NodeTree {
 
 	/**
 	 * Calculate the expression starting from the root
+	 * 
 	 * @return
 	 */
 	public double calculate() {
@@ -129,8 +131,9 @@ public class NodeTree {
 	}
 
 	/**
-	 * Parses tree and return a double if the node is a leaf
-	 * of the computation of {(left node) op (right node)}
+	 * Parses tree and return a double if the node is a leaf of the computation of
+	 * {(left node) op (right node)}
+	 * 
 	 * @param node
 	 * @return
 	 */
@@ -185,14 +188,11 @@ public class NodeTree {
 
 	/**
 	 * Creates the content of the .dot file starting from the root Node
+	 * 
 	 * @return
 	 */
 	public String toDotString() {
-		StringBuilder str = new StringBuilder();
-		str.append("digraph ArithmeticExpressionTree {\n" + "label=\"Arithmetic Expression\"\n");
-		str.append(toDotString(root));
-		str.append("}");
-		return str.toString();
+		return "digraph ArithmeticExpressionTree {\n" + "label=\"Arithmetic Expression\"\n" + toDotString(root) + "}";
 	}
 
 	private String toDotString(nodeT node) {
@@ -216,13 +216,15 @@ public class NodeTree {
 	}
 
 	/**
-	 *Private class representing one token of the expression
-	 * Values can be numbers or operators
+	 * Private class representing one token of the expression Values can be numbers
+	 * or operators
+	 * 
 	 * @author George
 	 */
 	private class nodeT {
-		private nodeT left, right;
-		private String val;
+		private final nodeT left;
+		private final nodeT right;
+		private final String val;
 
 		public nodeT(String val, nodeT left, nodeT right) {
 			this.left = left;
@@ -237,7 +239,7 @@ public class NodeTree {
 		protected nodeT getLeft() {
 			return left;
 		}
-		
+
 		protected nodeT getRight() {
 			return right;
 		}
