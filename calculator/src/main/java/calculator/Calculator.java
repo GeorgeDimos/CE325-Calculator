@@ -8,13 +8,13 @@ public class Calculator {
 	/**
 	 * @param args the command line arguments
 	 */
-	private final NodeTree tree;
+	private final ExpressionTree tree;
 
 	public Calculator(String expr) throws IllegalArgumentException {
 		if (!checkValidInput(expr)) {
 			throw new IllegalArgumentException();
 		}
-		tree = new NodeTree(expr);
+		tree = new ExpressionTree(expr);
 	}
 
 	/**
